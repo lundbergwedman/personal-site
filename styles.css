@@ -192,6 +192,16 @@ a:focus-visible {
 }
 
 /* Hero */
+.portrait {
+  margin: 0 0 1.6em;
+  font-family: var(--font-ascii);
+  font-size: min(8px, calc((100vw - 40px) / 40));
+  line-height: 1;
+  color: #dcdcdc;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
 .hello {
   font-size: 1.2em;
   color: var(--muted);

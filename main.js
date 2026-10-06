@@ -46,7 +46,8 @@
       ghost.className = 'ghost';
       ghost.textContent = text;
       node.replaceWith(typed, ghost);
-      block.units.push({ typed, ghost, text, mode: modeOf(parent) });
+      const stepOverride = parent.closest('[data-step]');
+      block.units.push({ typed, ghost, text, mode: modeOf(parent), step: stepOverride && Number(stepOverride.dataset.step) });
     }
     block.classList.add('pending');
   }
@@ -74,7 +75,7 @@
       let shown = 0;
       while (shown < unit.text.length && !skipping) {
         const burst = queue.length ? 4 : 1;
-        shown = Math.min(unit.text.length, shown + STEP[unit.mode] * burst);
+        shown = Math.min(unit.text.length, shown + (unit.step || STEP[unit.mode]) * burst);
         unit.typed.textContent = unit.text.slice(0, shown);
         unit.ghost.textContent = unit.text.slice(shown);
         await sleep(unit.mode === 'heading' ? 35 + Math.random() * 60 : 14);
