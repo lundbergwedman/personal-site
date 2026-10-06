@@ -5,6 +5,7 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const blocks = Array.from(document.querySelectorAll('[data-type]'));
   const STEP = { heading: 1, text: 3, pre: 9 };
+  const SECTIONS = ['home', 'about', 'story', 'ventures', 'contact'];
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -19,6 +20,8 @@
   const queue = [];
   let running = false;
   let skipping = false;
+  let current = null;
+  let activeSection = 'home';
 
   function modeOf(element) {
     if (element.closest('[data-instant]')) return 'instant';
@@ -54,8 +57,9 @@
   }
 
   async function typeBlock(block) {
+    current = block;
     block.classList.replace('pending', 'typing');
-    const instant = block.getBoundingClientRect().bottom < 0;
+    const instant = block.instant || block.getBoundingClientRect().bottom < 0;
     let previous = null;
 
     for (const unit of block.units) {
@@ -123,9 +127,49 @@
       }
     }, { rootMargin: '0px 0px -15% 0px' });
     blocks.forEach((block) => observer.observe(block));
+  }
+
+  // ---------------------------------------------------------------------------
+  // Navigation: jumping finishes everything above the target instantly, so the
+  // page doesn't type out sections the visitor skipped past.
+
+  function jumpTo(id) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    const index = blocks.indexOf(target);
+    blocks.slice(0, index).forEach((block) => {
+      block.instant = true;
+    });
+    if (running && current && blocks.indexOf(current) < index) skipping = true;
+    activeSection = target.dataset.nav || id;
+    if (index === 0) window.scrollTo({ top: 0 });
+    else target.scrollIntoView();
+    window.history.replaceState(null, '', `#${id}`);
+  }
+
+  function startKeyboard() {
+    document.querySelectorAll('.navbar a[href^="#"], .keys a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        jumpTo(link.getAttribute('href').slice(1));
+      });
+    });
 
     document.addEventListener('keydown', (event) => {
-      if (running && (event.key === 'Enter' || event.key === 'Escape')) skipping = true;
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.target instanceof Element && event.target.closest('input, textarea, select, [contenteditable]')) return;
+
+      const key = event.key;
+      if (/^[0-9]$/.test(key) && SECTIONS[Number(key)]) {
+        event.preventDefault();
+        jumpTo(SECTIONS[Number(key)]);
+      } else if (key === 'j' || key === 'k') {
+        event.preventDefault();
+        const index = SECTIONS.indexOf(activeSection) + (key === 'j' ? 1 : -1);
+        jumpTo(SECTIONS[Math.max(0, Math.min(SECTIONS.length - 1, index))]);
+      } else if ((key === 'Enter' || key === 'Escape') && running) {
+        skipping = true;
+      }
     });
   }
 
@@ -133,18 +177,27 @@
   // Navigation bar: highlight the section in view
 
   function startNavbar() {
-    const navLinks = Array.from(document.querySelectorAll('.navbar [data-section]'));
+    const navLinks = Array.from(document.querySelectorAll('.navbar [data-section], .keys [data-section]'));
+
+    const setActive = (section) => {
+      activeSection = section;
+      navLinks.forEach((link) => link.setAttribute('aria-current', String(link.dataset.section === section)));
+    };
 
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const active = entry.target.dataset.nav || entry.target.id;
-        navLinks.forEach((link) => link.setAttribute('aria-current', String(link.dataset.section === active)));
+        if (entry.isIntersecting) setActive(entry.target.dataset.nav || entry.target.id);
       }
     }, { rootMargin: '-45% 0px -50% 0px' });
     blocks.forEach((block) => observer.observe(block));
+
+    window.addEventListener('scroll', () => {
+      const atBottom = window.innerHeight + window.scrollY >= root.scrollHeight - 4;
+      if (atBottom) setActive(SECTIONS[SECTIONS.length - 1]);
+    }, { passive: true });
   }
 
   startTypewriter();
+  startKeyboard();
   if ('IntersectionObserver' in window) startNavbar();
 })();
