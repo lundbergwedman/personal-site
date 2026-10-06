@@ -17,6 +17,11 @@
   --text: #ededed;
   --muted: #8c8c8c;
   --accent: #ffffff;
+  --red: #ff6188;
+  --orange: #fc9867;
+  --yellow: #ffd866;
+  --purple: #ab9df2;
+  --cyan: #78dce8;
   --glow-text: 0 0 6px rgba(255, 255, 255, 0.18);
   --glow-accent: 0 0 1px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.3);
   --font: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
@@ -233,8 +238,19 @@ a:focus-visible {
   font-size: 0.9em;
 }
 
-.state {
-  color: var(--text);
+.state.live {
+  color: var(--cyan);
+  text-shadow: 0 0 8px rgba(120, 220, 232, 0.4);
+}
+
+.state.building {
+  color: var(--yellow);
+  text-shadow: 0 0 8px rgba(255, 216, 102, 0.4);
+}
+
+.state.soon {
+  color: var(--red);
+  text-shadow: 0 0 8px rgba(255, 97, 136, 0.45);
 }
 
 /* Contact */
@@ -251,7 +267,34 @@ a:focus-visible {
 }
 
 .label {
-  color: var(--muted);
+  color: var(--purple);
+  text-shadow: 0 0 8px rgba(171, 157, 242, 0.35);
+}
+
+/* Terminal-style highlight colors */
+.c-red {
+  color: var(--red);
+  text-shadow: 0 0 8px rgba(255, 97, 136, 0.45);
+}
+
+.c-orange {
+  color: var(--orange);
+  text-shadow: 0 0 8px rgba(252, 152, 103, 0.4);
+}
+
+.c-yellow {
+  color: var(--yellow);
+  text-shadow: 0 0 8px rgba(255, 216, 102, 0.4);
+}
+
+.c-purple {
+  color: var(--purple);
+  text-shadow: 0 0 8px rgba(171, 157, 242, 0.35);
+}
+
+.c-cyan {
+  color: var(--cyan);
+  text-shadow: 0 0 8px rgba(120, 220, 232, 0.4);
 }
 
 /* Typing state: untyped text keeps its layout but stays invisible. */
@@ -330,7 +373,7 @@ pre .cursor::after {
 
 .navbar a[aria-current='true'] {
   text-decoration: underline;
-  text-decoration-color: var(--accent);
+  text-decoration-color: var(--orange);
   text-underline-offset: 6px;
 }
 
@@ -372,9 +415,9 @@ pre .cursor::after {
 }
 
 .keys a[aria-current='true'] kbd {
-  border-color: var(--accent);
-  color: var(--accent);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  border-color: var(--yellow);
+  color: var(--yellow);
+  box-shadow: 0 0 8px rgba(255, 216, 102, 0.35);
 }
 
 .keys-gap {
