@@ -13,16 +13,12 @@
 }
 
 :root {
-  --bg: #050706;
+  --bg: #050505;
   --text: #ededed;
-  --muted: #8f9a93;
-  --accent: #3dff7f;
-  --amber: #ffb347;
-  --red: #ff5f56;
+  --muted: #8c8c8c;
+  --accent: #ffffff;
   --glow-text: 0 0 6px rgba(255, 255, 255, 0.18);
-  --glow-accent: 0 0 1px rgba(61, 255, 127, 0.8), 0 0 10px rgba(61, 255, 127, 0.35);
-  --glow-amber: 0 0 8px rgba(255, 179, 71, 0.35);
-  --glow-red: 0 0 8px rgba(255, 95, 86, 0.35);
+  --glow-accent: 0 0 1px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.3);
   --font: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --font-ascii: ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', monospace;
 }
@@ -41,7 +37,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
-  background: radial-gradient(ellipse at center, #0b120e 0%, var(--bg) 70%) fixed;
+  background: radial-gradient(ellipse at center, #101010 0%, var(--bg) 70%) fixed;
   font: 17px/1.75 var(--font);
   text-shadow: var(--glow-text);
   font-variant-ligatures: none;
@@ -140,7 +136,7 @@ a:focus-visible {
   right: 0;
   height: 22vh;
   top: -22vh;
-  background: linear-gradient(to bottom, rgba(61, 255, 127, 0), rgba(61, 255, 127, 0.035), rgba(61, 255, 127, 0));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
   animation: roll 9s linear infinite;
 }
 
@@ -208,7 +204,7 @@ a:focus-visible {
   line-height: 1.08;
   overflow: hidden;
   color: var(--accent);
-  text-shadow: 0 0 6px rgba(61, 255, 127, 0.55), 0 0 18px rgba(61, 255, 127, 0.25);
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.45), 0 0 18px rgba(255, 255, 255, 0.2);
 }
 
 .surname {
@@ -237,19 +233,8 @@ a:focus-visible {
   font-size: 0.9em;
 }
 
-.state.live {
-  color: var(--accent);
-  text-shadow: var(--glow-accent);
-}
-
-.state.building {
-  color: var(--amber);
-  text-shadow: var(--glow-amber);
-}
-
-.state.soon {
-  color: var(--red);
-  text-shadow: var(--glow-red);
+.state {
+  color: var(--text);
 }
 
 /* Contact */
@@ -326,7 +311,7 @@ pre .cursor::after {
   gap: 1.8em;
   align-items: center;
   padding: 16px max(24px, calc((100vw - 760px) / 2 + 24px));
-  background: linear-gradient(to bottom, rgba(5, 7, 6, 0.96) 60%, rgba(5, 7, 6, 0));
+  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.96) 60%, rgba(5, 5, 5, 0));
   font-size: 14px;
   white-space: nowrap;
 }
@@ -367,7 +352,7 @@ pre .cursor::after {
   gap: 1.6em;
   align-items: center;
   padding: 26px 32px 14px;
-  background: linear-gradient(to top, rgba(5, 7, 6, 0.96) 55%, rgba(5, 7, 6, 0));
+  background: linear-gradient(to top, rgba(5, 5, 5, 0.96) 55%, rgba(5, 5, 5, 0));
   color: var(--muted);
   font-size: 12.5px;
   white-space: nowrap;
@@ -389,7 +374,7 @@ pre .cursor::after {
 .keys a[aria-current='true'] kbd {
   border-color: var(--accent);
   color: var(--accent);
-  box-shadow: 0 0 8px rgba(61, 255, 127, 0.3);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
 .keys-gap {
