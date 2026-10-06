@@ -159,7 +159,7 @@ a:focus-visible {
 
 /* Layout */
 .page {
-  max-width: 760px;
+  max-width: 1140px;
   margin: 0 auto;
   padding: 110px 24px 120px;
 }
@@ -192,10 +192,29 @@ a:focus-visible {
 }
 
 /* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'text portrait';
+  column-gap: 56px;
+  align-items: center;
+  align-content: center;
+}
+
+.hero-text {
+  grid-area: text;
+  min-width: 0;
+}
+
+.hero .ascii {
+  font-size: clamp(6px, 1.4vw, 18px);
+}
+
 .portrait {
-  margin: 0 0 1.6em;
+  grid-area: portrait;
+  margin: 0;
   font-family: var(--font-ascii);
-  font-size: min(8px, calc((100vw - 40px) / 40));
+  font-size: min(9.5px, calc((100vw - 40px) / 40));
   line-height: 1;
   color: #dcdcdc;
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.35);
@@ -363,7 +382,7 @@ pre .cursor::after {
   display: flex;
   gap: 1.8em;
   align-items: center;
-  padding: 16px max(24px, calc((100vw - 760px) / 2 + 24px));
+  padding: 16px max(24px, calc((100vw - 1140px) / 2 + 24px));
   background: linear-gradient(to bottom, rgba(5, 5, 5, 0.96) 60%, rgba(5, 5, 5, 0));
   font-size: 14px;
   white-space: nowrap;
@@ -451,6 +470,23 @@ kbd {
 
 kbd + kbd {
   margin-left: -0.2em;
+}
+
+@media (max-width: 1000px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'portrait' 'text';
+    align-content: start;
+  }
+
+  .hero .ascii {
+    font-size: clamp(6px, 1.95vw, 18px);
+  }
+
+  .portrait {
+    font-size: min(8px, calc((100vw - 40px) / 40));
+    margin-bottom: 1.6em;
+  }
 }
 
 @media (max-width: 900px), (hover: none) and (pointer: coarse) {
