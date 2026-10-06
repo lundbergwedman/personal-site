@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gabriel Lundberg Wedman</title>
+  <meta name="description" content="Gabriel Lundberg Wedman, 19-year-old founder and full-stack developer from Göteborg. Co-founder of Repit Fitness AB.">
+  <meta name="theme-color" content="#050805">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gabriel Lundberg Wedman">
+  <meta property="og:description" content="Founder and full-stack developer from Göteborg. Co-founder of Repit Fitness AB.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    document.documentElement.classList.add('js');
+    setTimeout(() => document.documentElement.classList.add('ready'), 3000);
+  </script>
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <div class="crt" aria-hidden="true"></div>
+
+  <main class="terminal">
+    <section class="block" id="boot" data-type>
+      <p class="dim">GW-OS 19.0 LTS (tty1)</p>
+      <ul class="boot">
+        <li><span class="tag ok">[  OK  ]</span> Mounted /home/gabriel</li>
+        <li><span class="tag ok">[  OK  ]</span> Started coffee.service</li>
+        <li><span class="tag ok">[  OK  ]</span> Started repit.service (live on iOS &amp; Android)</li>
+        <li><span class="tag ok">[  OK  ]</span> Started speech-app.service (building)</li>
+        <li><span class="tag wait">[ WAIT ]</span> Starting jewla.service (stealth mode)</li>
+        <li><span class="tag ok">[  OK  ]</span> Reached target: shipping</li>
+      </ul>
+      <h1 class="name">
+        <span class="sr-only" data-instant>Gabriel Lundberg Wedman</span>
+        <pre class="ascii" aria-hidden="true"> ██████╗  █████╗ ██████╗ ██████╗ ██╗███████╗██╗
+██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██║██╔════╝██║
+██║  ███╗███████║██████╔╝██████╔╝██║█████╗  ██║
+██║   ██║██╔══██║██╔══██╗██╔══██╗██║██╔══╝  ██║
+╚██████╔╝██║  ██║██████╔╝██║  ██║██║███████╗███████╗
+ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝</pre>
+        <span class="surname" aria-hidden="true">lundberg wedman</span>
+      </h1>
+      <p class="tagline">founder · full-stack developer · göteborg, sweden</p>
+      <p class="dim hint">scroll down to continue ↓ (enter skips the animation)</p>
+    </section>
+
+    <section class="block" id="whoami" data-type>
+      <p class="cmd"><span class="ps1" data-instant>gabriel@gw:~$</span> whoami</p>
+      <dl class="kv">
+        <dt>name</dt><dd>Gabriel Lundberg Wedman</dd>
+        <dt>age</dt><dd>19</dd>
+        <dt>location</dt><dd>Göteborg, Sweden</dd>
+        <dt>role</dt><dd>founder, full-stack developer</dd>
+        <dt>stack</dt><dd>Flutter, Firebase, TypeScript, Python</dd>
+        <dt>status</dt><dd class="hl">building</dd>
+      </dl>
+      <p>I build products end to end: design, app, backend and AI. I run several startups in parallel and care most about shipping things people actually use.</p>
+    </section>
+
+    <section class="block" id="ventures" data-type>
+      <p class="cmd"><span class="ps1" data-instant>gabriel@gw:~$</span> ls -l ~/ventures</p>
+      <ul class="ls">
+        <li><span class="perm">drwxr-xr-x</span><a href="#repit">repit/</a><span class="state live">live</span><span class="desc">fitness &amp; health app</span></li>
+        <li><span class="perm">drwxr-xr-x</span><a href="#speech-app">speech-app/</a><span class="state building">building</span><span class="desc">app for adults who stutter</span></li>
+        <li><span class="perm">drwx------</span><a href="#jewla">jewla/</a><span class="state stealth">stealth</span><span class="desc">custom jewelry</span></li>
+      </ul>
+    </section>
+
+    <section class="block" id="repit" data-type>
+      <p class="cmd"><span class="ps1" data-instant>gabriel@gw:~$</span> cat ventures/repit/README.md</p>
+      <h2># Repit Fitness AB <span class="dim">(co-founder)</span></h2>
+      <p>All your fitness in one place: strength, cardio, nutrition and sleep, with an AI assistant that coaches you across all of it.</p>
+      <ul class="md">
+        <li>- live on iOS &amp; Android with paying subscribers</li>
+        <li>- rated 4.8 on the App Store and 4.7 on Google Play</li>
+        <li>- Repit 3.0 shipped July 2026: sleep tracking, recipes, Strava sync</li>
+        <li>- Flutter + Firebase, team of three</li>
+      </ul>
+      <p>-&gt; <a data-link="repit" href="https://repitfitness.se" target="_blank" rel="noopener">repitfitness.se</a></p>
+    </section>
+
+    <section class="block" id="speech-app" data-type>
+      <p class="cmd"><span class="ps1" data-instant>gabriel@gw:~$</span> cat ventures/speech-app/README.md</p>
+      <h2># speech-app <span class="dim">(founder, working title)</span></h2>
+      <p>An app for adults who stutter: guided speech practice, reflection and progress over time. Built around real situations, not promises of a cure.</p>
+      <ul class="md">
+        <li>- Flutter app with a Firebase backend, privacy-first by design</li>
+        <li>- status: private prototype</li>
+      </ul>
+    </section>
+
+    <section class="block" id="jewla" data-type>
+      <p class="cmd"><span class="ps1" data-instant>gabriel@gw:~$</span> cat ventures/jewla/README.md</p>
+      <h2># Jewla <span class="dim">(founder)</span></h2>
+      <p>Personalized jewelry, made to order.</p>
+      <ul class="md">
+        <li>- status: stealth, launching soon</li>
+      </ul>
+    </section>
+
+    <section class="block" id="contact" data-type>
+      <p class="cmd"><span class="ps1" data-instant>gabriel@gw:~$</span> ./contact --all</p>
+      <ul class="contact">
+        <li><span class="key">linkedin</span><a data-link="linkedin" href="https://www.linkedin.com/in/gabriellundbergwedman" target="_blank" rel="noopener">linkedin.com/in/gabriellundbergwedman</a></li>
+        <li><span class="key">github</span><a data-link="github" href="https://github.com/CheeseMaster07" target="_blank" rel="noopener">github.com/CheeseMaster07</a></li>
+        <li><span class="key">instagram</span><a data-link="instagram" href="https://www.instagram.com/gabbeismyname" target="_blank" rel="noopener">instagram.com/gabbeismyname</a></li>
+        <li><span class="key">email</span><a data-link="email" href="mailto:gabriel@lundbergwedman.com">gabriel@lundbergwedman.com</a></li>
+      </ul>
+    </section>
+
+    <section class="block" id="shell" data-type>
+      <p class="cmd"><span class="ps1" data-instant>gabriel@gw:~$</span> ./shell</p>
+      <p class="dim">interactive shell ready. type "help" and press enter.</p>
+      <div class="shell-output" id="shell-output" aria-live="polite"></div>
+      <form class="prompt" id="shell-form" autocomplete="off">
+        <label class="ps1" for="shell-input">gabriel@gw:~$</label>
+        <input id="shell-input" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="send" aria-label="Terminal command">
+      </form>
+    </section>
+
+    <footer class="dim footer">[process completed] © 2026 Gabriel Lundberg Wedman</footer>
+  </main>
+
+  <nav class="statusbar" aria-label="Sections">
+    <span class="session">[gw]</span>
+    <a href="#boot" data-section="boot">0:boot</a>
+    <a href="#whoami" data-section="whoami">1:whoami</a>
+    <a href="#ventures" data-section="ventures">2:ventures</a>
+    <a href="#contact" data-section="contact">3:contact</a>
+    <a href="#shell" data-section="shell">4:shell</a>
+    <span class="clock" id="clock"></span>
+  </nav>
+</body>
+</html>
