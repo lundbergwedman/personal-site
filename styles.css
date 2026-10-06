@@ -150,11 +150,16 @@ a:focus-visible {
   margin-bottom: 24vh;
 }
 
-.venture {
+.venture,
+.chapter {
   margin-bottom: 14vh;
 }
 
-.venture:last-of-type {
+.chapter h3 {
+  margin-bottom: 0.5em;
+}
+
+.block.section-end {
   margin-bottom: 24vh;
 }
 

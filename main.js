@@ -134,12 +134,11 @@
 
   function startNavbar() {
     const navLinks = Array.from(document.querySelectorAll('.navbar [data-section]'));
-    const sectionFor = { repit: 'ventures', 'speech-app': 'ventures', jewla: 'ventures' };
 
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        const active = sectionFor[entry.target.id] || entry.target.id;
+        const active = entry.target.dataset.nav || entry.target.id;
         navLinks.forEach((link) => link.setAttribute('aria-current', String(link.dataset.section === active)));
       }
     }, { rootMargin: '-45% 0px -50% 0px' });
