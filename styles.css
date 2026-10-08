@@ -322,12 +322,12 @@ a:focus-visible {
   text-shadow: 0 0 8px rgba(252, 152, 103, 0.4);
 }
 
+.chapter,
+.tab-steps {
+  max-width: 820px;
+}
+
 .chapter {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: 'text art';
-  column-gap: 56px;
-  align-items: start;
   margin-bottom: 2.4em;
 }
 
@@ -335,25 +335,9 @@ a:focus-visible {
   outline: none;
 }
 
-.chapter-text {
-  grid-area: text;
-  min-width: 0;
-}
-
 .chapter-meta {
   margin-bottom: 0.4em;
   font-size: 0.85em;
-}
-
-.art {
-  grid-area: art;
-  margin: 0.4em 0 0;
-  font-family: var(--font-ascii);
-  font-size: min(13px, calc((100vw - 40px) / 27));
-  line-height: 1.2;
-  color: #dcdcdc;
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.35);
-  overflow: hidden;
 }
 
 .tab-steps {
@@ -680,15 +664,6 @@ kbd + kbd {
   .portrait {
     font-size: min(8px, calc((100vw - 40px) / 40));
     margin-bottom: 1.6em;
-  }
-
-  .chapter {
-    grid-template-columns: 1fr;
-    grid-template-areas: 'art' 'text';
-  }
-
-  .art {
-    margin: 0 0 1.6em;
   }
 }
 

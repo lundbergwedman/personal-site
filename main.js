@@ -224,7 +224,11 @@
       if (!selected && !panel.hidden && current === panel && running) skipping = true;
       panel.hidden = !selected;
     }
-    tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    // Keep the selected tab visible on narrow screens without scrolling the page.
+    const bar = tabList.getBoundingClientRect();
+    const box = tab.getBoundingClientRect();
+    if (box.left < bar.left) tabList.scrollLeft -= bar.left - box.left;
+    else if (box.right > bar.right) tabList.scrollLeft += box.right - bar.right;
     if (focus) tab.focus({ preventScroll: true });
     if (reveal) {
       const box = tabList.getBoundingClientRect();
