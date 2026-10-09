@@ -30,8 +30,8 @@ points them to email.
 - Only requests from lundbergwedman.com (and `localhost:8000` for testing) are
   accepted, and each visitor gets 10 questions a minute.
 - The model is set by `OPENAI_MODEL` in `wrangler.toml` (default
-  `gpt-5.4-mini`). If you change it, update the `model:` line in the Ask box
-  in `index.html` too.
+  `gpt-5.4-mini`). If you change it, update `data-model` on the Ask form in
+  `index.html` too, which `/status` shows.
 - Answers are capped at 1024 tokens. Set a monthly budget on the OpenAI
   platform as well.
 - Never put the API key in the site files. The repo and site are public.

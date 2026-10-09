@@ -146,12 +146,6 @@
       <h2>Ask me anything</h2>
       <p>Curious about something I didn't cover? Ask about me, my story or my projects. An AI that knows my story will answer, though it can get things wrong.</p>
       <div class="cx">
-        <div class="cx-card">
-          <p><b>&gt;_</b> <b>gabriel</b> <span class="dim">(v4.0)</span></p>
-          <p>&nbsp;</p>
-          <p><span class="dim">model:    </span> <span class="cx-model">gpt-5.4-mini</span> <span class="dim">low</span></p>
-          <p><span class="dim">directory:</span> ~/göteborg/gabriel</p>
-        </div>
         <div class="cx-intro">
           <p class="dim">To get started, ask anything about me, or try one of these commands:</p>
           <p><span class="cx-cmd">/help</span> <span class="dim">- show example questions</span></p>
@@ -159,7 +153,7 @@
           <p><span class="cx-cmd">/clear</span> <span class="dim">- start a new conversation</span></p>
         </div>
         <ol class="cx-log" aria-live="polite"></ol>
-        <form class="cx-composer" data-endpoint="">
+        <form class="cx-composer" data-endpoint="https://lundbergwedman-ask.lundbergwedman.workers.dev" data-model="gpt-5.4-mini">
           <label class="sr-only" for="cx-input">Ask a question about Gabriel</label>
           <span class="cx-prompt" aria-hidden="true">›</span>
           <textarea id="cx-input" name="q" rows="1" maxlength="500" autocomplete="off" spellcheck="false" placeholder="How did Repit start?"></textarea>

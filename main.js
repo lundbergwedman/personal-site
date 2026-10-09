@@ -258,14 +258,22 @@
     const history = [];
     let controller = null;
 
-    const keepInView = () => form.scrollIntoView({ block: 'nearest' });
+    const footer = document.querySelector('.cx-footer');
+    // Keep the composer and its hint line clear of the fixed bottom bar.
+    // ('nearest' ignores scroll-margin when the line is barely visible.)
+    const keepInView = () => {
+      const box = footer.getBoundingClientRect();
+      const margin = parseFloat(getComputedStyle(footer).scrollMarginBottom) || 0;
+      if (box.top < 0 || box.bottom > window.innerHeight - margin) {
+        footer.scrollIntoView({ block: 'end', behavior: 'instant' });
+      }
+    };
 
     const line = (className, text) => {
       const item = document.createElement('li');
       item.className = className;
       if (text !== undefined) item.textContent = text;
       log.append(item);
-      keepInView();
       return item;
     };
 
@@ -278,6 +286,7 @@
       const body = document.createElement('div');
       body.textContent = text;
       item.append(prefix, body);
+      keepInView();
       return body;
     };
 
@@ -299,6 +308,7 @@
         item.innerHTML = `<span class="cx-mark">•</span><div><span class="cx-shimmer">Working</span> <span class="dim">(${seconds}s • esc to interrupt)</span></div>`;
       };
       draw();
+      keepInView();
       const timer = setInterval(draw, 1000);
       return () => {
         clearInterval(timer);
@@ -366,7 +376,7 @@
         prefixed('cx-note', '•', `Things you can ask:\n${ASK_IDEAS.map((idea) => `  ${idea}`).join('\n')}`);
       } else if (name === '/status') {
         const asked = history.filter((message) => message.role === 'user').length;
-        prefixed('cx-note', '•', `model:     ${document.querySelector('.cx-model')?.textContent || 'unknown'}\nquestions: ${asked}\n${context.textContent}`);
+        prefixed('cx-note', '•', `model:     ${form.dataset.model || 'unknown'}\nquestions: ${asked}\n${context.textContent}`);
       } else {
         prefixed('cx-note cx-error', '■', `Unrecognized command '${name}'. Type /help for ideas.`);
       }
@@ -392,7 +402,12 @@
       submit();
     });
 
-    input.addEventListener('input', resize);
+    input.addEventListener('input', () => {
+      resize();
+      // After the browser has scrolled the caret into view.
+      requestAnimationFrame(keepInView);
+    });
+    input.addEventListener('focus', keepInView);
     input.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
         event.preventDefault();

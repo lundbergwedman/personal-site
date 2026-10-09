@@ -285,19 +285,6 @@ a:focus-visible {
   margin: 0;
 }
 
-.cx b {
-  color: var(--accent);
-}
-
-.cx-card {
-  display: inline-block;
-  margin-bottom: 1.4em;
-  padding: 0.5em 1.2em;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 6px;
-  white-space: pre;
-}
-
 .cx-intro {
   margin: 0 0 1.6em 1.2em;
 }
@@ -374,7 +361,6 @@ a:focus-visible {
 }
 
 .cx-composer {
-  scroll-margin-bottom: 110px;
   display: grid;
   grid-template-columns: 1.6em minmax(0, 1fr);
   align-items: start;
@@ -408,9 +394,10 @@ a:focus-visible {
 }
 
 .cx-footer {
-  margin-top: 0.7em !important;
+  margin: 0.9em 0 3em !important;
   padding-left: 0.6em;
   font-size: 0.85em;
+  scroll-margin-bottom: 120px;
 }
 
 /* Contact */
