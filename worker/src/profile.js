@@ -5,7 +5,7 @@ export const PROFILE = `
 
 - 19 years old, lives in Göteborg (Gothenburg), Sweden.
 - Founder and full-stack developer. Works mostly with Flutter, Firebase, TypeScript and Python.
-- Contact: gabriel@lundbergwedman.com. Also on LinkedIn (gabriellundbergwedman), GitHub (CheeseMaster07) and Instagram (gabbeismyname).
+- Contact: gabriel@lundbergwedman.com. Also on LinkedIn (gabriellundbergwedman), GitHub (lundbergwedman) and Instagram (gabbeismyname).
 
 ## Stocks (age 13)
 Got interested in the stock market at 13. What fascinated him was why some companies are worth more than others, which led him to care more about the businesses behind the stocks than the stocks themselves. That made him want to start a business of his own.
