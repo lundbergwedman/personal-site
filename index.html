@@ -85,96 +85,86 @@
 
     <section class="block story-intro" id="story" data-type>
       <h2>My story</h2>
-      <p>From reading about stocks at 13 to running a company at 19. Pick a chapter below.</p>
+      <p>From reading about stocks at 13 to running a company at 19.</p>
     </section>
 
-    <div class="story">
-      <div class="tabs" role="tablist" aria-label="Chapters of my story">
-        <button type="button" role="tab" id="tab-whoami" aria-controls="chapter-whoami" aria-selected="true"><span class="tab-num">01</span>whoami</button>
-        <button type="button" role="tab" id="tab-stocks" aria-controls="chapter-stocks" aria-selected="false" tabindex="-1"><span class="tab-num">02</span>stocks</button>
-        <button type="button" role="tab" id="tab-code" aria-controls="chapter-code" aria-selected="false" tabindex="-1"><span class="tab-num">03</span>code</button>
-        <button type="button" role="tab" id="tab-repit" aria-controls="chapter-repit" aria-selected="false" tabindex="-1"><span class="tab-num">04</span>repit</button>
-        <button type="button" role="tab" id="tab-gym" aria-controls="chapter-gym" aria-selected="false" tabindex="-1"><span class="tab-num">05</span>gym</button>
-        <button type="button" role="tab" id="tab-cyber" aria-controls="chapter-cyber" aria-selected="false" tabindex="-1"><span class="tab-num">06</span>cyber</button>
-        <button type="button" role="tab" id="tab-next" aria-controls="chapter-next" aria-selected="false" tabindex="-1"><span class="tab-num">07</span>next</button>
-      </div>
+    <article class="block chapter" id="chapter-whoami" data-type data-nav="story">
+      <p class="chapter-meta dim">01 / 07 · today</p>
+      <h3>Hi, I'm Gabriel</h3>
+      <p>I'm <span class="c-yellow">19</span>, I live in <span class="c-yellow">Göteborg</span>, and I build companies. Most days that means writing code, talking to users and figuring out what to build next, usually all at the same time.</p>
+      <p>I co-founded <span class="c-cyan">Repit Fitness</span>, I have a few more projects on the way, and I serve as a <span class="c-cyan">cyber soldier</span> in the Swedish Armed Forces. I mostly work with <span class="c-purple">Flutter</span>, <span class="c-purple">Firebase</span>, <span class="c-purple">TypeScript</span> and <span class="c-purple">Python</span>.</p>
+      <p class="dim">This is how I got here, one chapter at a time.</p>
+    </article>
 
-      <article class="block chapter" id="chapter-whoami" role="tabpanel" aria-labelledby="tab-whoami" tabindex="0" data-type data-nav="story">
-        <p class="chapter-meta dim">01 / 07 · today</p>
-        <h3>Hi, I'm Gabriel</h3>
-        <p>I'm <span class="c-yellow">19</span>, I live in <span class="c-yellow">Göteborg</span>, and I build companies. Most days that means writing code, talking to users and figuring out what to build next, usually all at the same time.</p>
-        <p>I co-founded <span class="c-cyan">Repit Fitness</span>, I have a few more projects on the way, and I serve as a <span class="c-cyan">cyber soldier</span> in the Swedish Armed Forces. I mostly work with <span class="c-purple">Flutter</span>, <span class="c-purple">Firebase</span>, <span class="c-purple">TypeScript</span> and <span class="c-purple">Python</span>.</p>
-        <p class="dim">This is how I got here, one chapter at a time.</p>
-      </article>
+    <article class="block chapter" id="chapter-stocks" data-type data-nav="story">
+      <p class="chapter-meta dim">02 / 07 · age 13</p>
+      <h3>It started with stocks</h3>
+      <p>When I was <span class="c-yellow">13</span> I got hooked on the stock market. What pulled me in wasn't the idea of getting rich quick, it was the question underneath: why are some companies worth so much more than others?</p>
+      <p>The more I read, the more I realised that the part I found most interesting wasn't the stock. It was the <span class="c-orange">business</span> behind it. How it makes money, why customers choose it, how it grows. At some point I stopped wanting to just own a small piece of companies. I wanted to <span class="c-orange">start one</span>.</p>
+    </article>
 
-      <article class="block chapter" id="chapter-stocks" role="tabpanel" aria-labelledby="tab-stocks" tabindex="0" data-type data-nav="story" hidden>
-        <p class="chapter-meta dim">02 / 07 · age 13</p>
-        <h3>It started with stocks</h3>
-        <p>When I was <span class="c-yellow">13</span> I got hooked on the stock market. What pulled me in wasn't the idea of getting rich quick, it was the question underneath: why are some companies worth so much more than others?</p>
-        <p>The more I read, the more I realised that the part I found most interesting wasn't the stock. It was the <span class="c-orange">business</span> behind it. How it makes money, why customers choose it, how it grows. At some point I stopped wanting to just own a small piece of companies. I wanted to <span class="c-orange">start one</span>.</p>
-      </article>
+    <article class="block chapter" id="chapter-code" data-type data-nav="story">
+      <p class="chapter-meta dim">03 / 07 · age 14</p>
+      <h3>Learning to code before AI</h3>
+      <p>At <span class="c-yellow">14</span> I started programming. This was before AI could write code for you, so learning meant documentation, forums and a lot of staring at error messages until they finally made sense. It was slow, but it taught me how things actually work, and I'm grateful for that today.</p>
+      <p>Naturally, I wanted to merge my two interests. So I started building <span class="c-cyan">Fundaments</span>, software for analysing stocks based on company fundamentals. The idea held up. The problem was that good financial data comes through APIs, and those APIs cost far more than a 14-year-old could afford.</p>
+      <p>Fundaments never launched, but it gave me my first real business lesson: an idea is only as good as your ability to actually run it.</p>
+    </article>
 
-      <article class="block chapter" id="chapter-code" role="tabpanel" aria-labelledby="tab-code" tabindex="0" data-type data-nav="story" hidden>
-        <p class="chapter-meta dim">03 / 07 · age 14</p>
-        <h3>Learning to code before AI</h3>
-        <p>At <span class="c-yellow">14</span> I started programming. This was before AI could write code for you, so learning meant documentation, forums and a lot of staring at error messages until they finally made sense. It was slow, but it taught me how things actually work, and I'm grateful for that today.</p>
-        <p>Naturally, I wanted to merge my two interests. So I started building <span class="c-cyan">Fundaments</span>, software for analysing stocks based on company fundamentals. The idea held up. The problem was that good financial data comes through APIs, and those APIs cost far more than a 14-year-old could afford.</p>
-        <p>Fundaments never launched, but it gave me my first real business lesson: an idea is only as good as your ability to actually run it.</p>
-      </article>
+    <article class="block chapter" id="chapter-repit" data-type data-nav="story">
+      <p class="chapter-meta dim">04 / 07 · 2023 – now</p>
+      <h3>From a notes app to Repit</h3>
+      <p>Then another interest took over: training. For a long time I logged every workout in my phone's notes app. It sort of worked, but I kept wishing for an app that did it properly, without being either too basic or impossibly complicated.</p>
+      <p>So in <span class="c-yellow">late 2023</span> I started building one myself. One day my friend <span class="c-cyan">Olle Oskarsson</span> joined me, and it stopped being a side project. Once he came over at <span class="c-orange">04:45</span> expecting to wake me up. I was already sitting there, deep in the code.</p>
+      <p>As we got closer to launch we realised that the world doesn't need another workout log. We needed to be different, so we built it out with nutrition, sleep and an AI coach that ties it all together. In <span class="c-yellow">early 2025</span> we officially incorporated <span class="c-cyan">Repit Fitness AB</span>.</p>
+      <p>Today Repit is live with paying subscribers, rated <span class="c-yellow">4.8</span> on the App Store and <span class="c-yellow">4.7</span> on Google Play. In <span class="c-yellow">July 2026</span> we shipped <span class="c-cyan">Repit 3.0</span>, our biggest update so far, and we're a team of three. <a data-link="repit" href="https://repitfitness.se" target="_blank" rel="noopener">repitfitness.se</a></p>
+    </article>
 
-      <article class="block chapter" id="chapter-repit" role="tabpanel" aria-labelledby="tab-repit" tabindex="0" data-type data-nav="story" hidden>
-        <p class="chapter-meta dim">04 / 07 · 2023 – now</p>
-        <h3>From a notes app to Repit</h3>
-        <p>Then another interest took over: training. For a long time I logged every workout in my phone's notes app. It sort of worked, but I kept wishing for an app that did it properly, without being either too basic or impossibly complicated.</p>
-        <p>So in <span class="c-yellow">late 2023</span> I started building one myself. One day my friend <span class="c-cyan">Olle Oskarsson</span> joined me, and it stopped being a side project. Once he came over at <span class="c-orange">04:45</span> expecting to wake me up. I was already sitting there, deep in the code.</p>
-        <p>As we got closer to launch we realised that the world doesn't need another workout log. We needed to be different, so we built it out with nutrition, sleep and an AI coach that ties it all together. In <span class="c-yellow">early 2025</span> we officially incorporated <span class="c-cyan">Repit Fitness AB</span>.</p>
-        <p>Today Repit is live with paying subscribers, rated <span class="c-yellow">4.8</span> on the App Store and <span class="c-yellow">4.7</span> on Google Play. In <span class="c-yellow">July 2026</span> we shipped <span class="c-cyan">Repit 3.0</span>, our biggest update so far, and we're a team of three. <a data-link="repit" href="https://repitfitness.se" target="_blank" rel="noopener">repitfitness.se</a></p>
-      </article>
+    <article class="block chapter" id="chapter-gym" data-type data-nav="story">
+      <p class="chapter-meta dim">05 / 07 · every week</p>
+      <h3>The gym</h3>
+      <p>Training has been a constant in my life for years, and it's the reason Repit exists at all. I didn't start out knowing what I was doing. Like most people, I learned by showing up, making mistakes and slowly figuring out what actually works for my body.</p>
+      <p>What the gym taught me goes way beyond lifting. Progress is boring and invisible from day to day, and obvious when you look back over a year. You can't skip the work, you have to track it to improve it, and consistency beats motivation every time. That's exactly how I try to build companies too.</p>
+    </article>
 
-      <article class="block chapter" id="chapter-gym" role="tabpanel" aria-labelledby="tab-gym" tabindex="0" data-type data-nav="story" hidden>
-        <p class="chapter-meta dim">05 / 07 · every week</p>
-        <h3>The gym</h3>
-        <p>Training has been a constant in my life for years, and it's the reason Repit exists at all. I didn't start out knowing what I was doing. Like most people, I learned by showing up, making mistakes and slowly figuring out what actually works for my body.</p>
-        <p>What the gym taught me goes way beyond lifting. Progress is boring and invisible from day to day, and obvious when you look back over a year. You can't skip the work, you have to track it to improve it, and consistency beats motivation every time. That's exactly how I try to build companies too.</p>
-      </article>
+    <article class="block chapter" id="chapter-cyber" data-type data-nav="story">
+      <p class="chapter-meta dim">06 / 07 · Swedish Armed Forces</p>
+      <h3>Cyber soldier</h3>
+      <p>Alongside everything else, I'm a <span class="c-cyan">cyber soldier</span> (cybersoldat) in the <span class="c-yellow">Swedish Armed Forces</span>. The role is about protecting systems and networks, and understanding how things break so you know how to defend them.</p>
+      <p>It's a very different world from a startup: structure, discipline and a team where everyone depends on each other. But the core feels familiar. Whether it's an app or a network, I want to understand a system deeply enough to make it better and keep it safe.</p>
+    </article>
 
-      <article class="block chapter" id="chapter-cyber" role="tabpanel" aria-labelledby="tab-cyber" tabindex="0" data-type data-nav="story" hidden>
-        <p class="chapter-meta dim">06 / 07 · Swedish Armed Forces</p>
-        <h3>Cyber soldier</h3>
-        <p>Alongside everything else, I'm a <span class="c-cyan">cyber soldier</span> (cybersoldat) in the <span class="c-yellow">Swedish Armed Forces</span>. The role is about protecting systems and networks, and understanding how things break so you know how to defend them.</p>
-        <p>It's a very different world from a startup: structure, discipline and a team where everyone depends on each other. But the core feels familiar. Whether it's an app or a network, I want to understand a system deeply enough to make it better and keep it safe.</p>
-      </article>
-
-      <article class="block chapter" id="chapter-next" role="tabpanel" aria-labelledby="tab-next" tabindex="0" data-type data-nav="story" hidden>
-        <p class="chapter-meta dim">07 / 07 · what's next</p>
-        <h3>More on the way</h3>
-        <p>Repit isn't the only thing I'm working on. I'm building a <span class="c-cyan">speech app for adults who stutter</span>, focused on guided practice in real-life situations, with privacy first. And there's <span class="c-cyan">Jewla</span>, personalized jewelry made to order, my first step into physical products.</p>
-        <p>If there's one thread through all of this, it's <span class="c-orange">drive</span>. I like hard problems, I don't like waiting for permission, and I'd rather build something and learn from it than talk about it. I'm <span class="c-yellow">19</span>, and I feel like I'm just getting started.</p>
-        <p class="dim">Want to know more? Ask below.</p>
-      </article>
-
-      <div class="tab-steps">
-        <button type="button" data-move="-1">← prev</button>
-        <button type="button" data-move="1">next →</button>
-      </div>
-    </div>
+    <article class="block chapter section-end" id="chapter-next" data-type data-nav="story">
+      <p class="chapter-meta dim">07 / 07 · what's next</p>
+      <h3>More on the way</h3>
+      <p>Repit isn't the only thing I'm working on. I'm building a <span class="c-cyan">speech app for adults who stutter</span>, focused on guided practice in real-life situations, with privacy first. And there's <span class="c-cyan">Jewla</span>, personalized jewelry made to order, my first step into physical products.</p>
+      <p>If there's one thread through all of this, it's <span class="c-orange">drive</span>. I like hard problems, I don't like waiting for permission, and I'd rather build something and learn from it than talk about it. I'm <span class="c-yellow">19</span>, and I feel like I'm just getting started.</p>
+      <p class="dim">Want to know more? Ask below.</p>
+    </article>
 
     <section class="block" id="ask" data-type>
       <h2>Ask me anything</h2>
-      <p>Curious about something I didn't cover? Ask about me, my story or my projects. An AI that knows my story will answer.</p>
-      <div class="cc">
-        <div class="cc-welcome">
-          <p><span class="c-orange">✻</span> Welcome to <strong>gabriel-code</strong></p>
-          <p class="dim">/help for ideas · /clear to start over</p>
-          <p class="dim">Answers are written by Claude and can be wrong.</p>
+      <p>Curious about something I didn't cover? Ask about me, my story or my projects. An AI that knows my story will answer, though it can get things wrong.</p>
+      <div class="cx">
+        <div class="cx-card">
+          <p><b>&gt;_</b> <b>gabriel</b> <span class="dim">(v4.0)</span></p>
+          <p>&nbsp;</p>
+          <p><span class="dim">model:    </span> <span class="cx-model">gpt-5.4-mini</span> <span class="dim">low</span></p>
+          <p><span class="dim">directory:</span> ~/göteborg/gabriel</p>
         </div>
-        <ol class="cc-log" aria-live="polite"></ol>
-        <form class="cc-form" data-endpoint="">
-          <label class="sr-only" for="cc-input">Ask a question about Gabriel</label>
-          <span class="cc-prompt" aria-hidden="true">&gt;</span>
-          <input id="cc-input" name="q" type="text" autocomplete="off" maxlength="500" placeholder="Try &quot;how did Repit start?&quot;">
+        <div class="cx-intro">
+          <p class="dim">To get started, ask anything about me, or try one of these commands:</p>
+          <p><span class="cx-cmd">/help</span> <span class="dim">- show example questions</span></p>
+          <p><span class="cx-cmd">/status</span> <span class="dim">- show the current session</span></p>
+          <p><span class="cx-cmd">/clear</span> <span class="dim">- start a new conversation</span></p>
+        </div>
+        <ol class="cx-log" aria-live="polite"></ol>
+        <form class="cx-composer" data-endpoint="">
+          <label class="sr-only" for="cx-input">Ask a question about Gabriel</label>
+          <span class="cx-prompt" aria-hidden="true">›</span>
+          <textarea id="cx-input" name="q" rows="1" maxlength="500" autocomplete="off" spellcheck="false" placeholder="How did Repit start?"></textarea>
         </form>
-        <p class="cc-hint dim"><kbd>/</kbd>to focus · <kbd>Enter</kbd>to send</p>
+        <p class="cx-footer dim"><span class="cx-context">100% context left</span> · ⏎ send · ⇧⏎ newline · esc to interrupt</p>
       </div>
     </section>
 
@@ -197,6 +187,17 @@
     <a href="#story" data-section="story">Story</a>
     <a href="#ask" data-section="ask">Ask</a>
     <a href="#contact" data-section="contact">Contact</a>
+  </nav>
+
+  <nav class="chapters" aria-label="Story chapters">
+    <span class="chapters-label">story ›</span>
+    <a href="#chapter-whoami"><span class="num">01</span>whoami</a>
+    <a href="#chapter-stocks"><span class="num">02</span>stocks</a>
+    <a href="#chapter-code"><span class="num">03</span>code</a>
+    <a href="#chapter-repit"><span class="num">04</span>repit</a>
+    <a href="#chapter-gym"><span class="num">05</span>gym</a>
+    <a href="#chapter-cyber"><span class="num">06</span>cyber</a>
+    <a href="#chapter-next"><span class="num">07</span>next</a>
   </nav>
 
   <nav class="keys" aria-label="Keyboard shortcuts">

@@ -23,9 +23,6 @@
   let current = null;
   let activeSection = 'home';
 
-  // Story chapters live in tabs; a hidden chapter is skipped until it's opened.
-  const isHidden = (block) => Boolean(block.closest('[hidden]'));
-
   function modeOf(element) {
     if (element.closest('[data-instant]')) return 'instant';
     if (element.closest('h2, h3, .hello')) return 'heading';
@@ -63,7 +60,7 @@
   async function typeBlock(block) {
     current = block;
     block.classList.replace('pending', 'typing');
-    const instant = block.instant || isHidden(block) || block.getBoundingClientRect().bottom < 0;
+    const instant = block.instant || block.getBoundingClientRect().bottom < 0;
     let previous = null;
 
     for (const unit of block.units) {
@@ -95,7 +92,7 @@
   function enqueue(block) {
     const index = blocks.indexOf(block);
     for (const earlier of blocks.slice(0, index + 1)) {
-      if (earlier.queued || isHidden(earlier)) continue;
+      if (earlier.queued) continue;
       earlier.queued = true;
       queue.push(earlier);
     }
@@ -110,7 +107,7 @@
       await typeBlock(queue.shift());
     }
     running = false;
-    if (blocks.every((block) => isHidden(block) || block.classList.contains('done'))) cursor.remove();
+    if (blocks.every((block) => block.classList.contains('done'))) cursor.remove();
   }
 
   function startTypewriter() {
@@ -142,7 +139,7 @@
     if (!target) return;
     const index = blocks.indexOf(target);
     blocks.slice(0, index).forEach((block) => {
-      if (!isHidden(block)) block.instant = true;
+      block.instant = true;
     });
     if (running && current && blocks.indexOf(current) < index) skipping = true;
     activeSection = target.dataset.nav || id;
@@ -152,7 +149,7 @@
   }
 
   function startKeyboard() {
-    document.querySelectorAll('.navbar a[href^="#"], .keys a[href^="#"]').forEach((link) => {
+    document.querySelectorAll('.navbar a[href^="#"], .keys a[href^="#"], .chapters a[href^="#"]').forEach((link) => {
       link.addEventListener('click', (event) => {
         event.preventDefault();
         jumpTo(link.getAttribute('href').slice(1));
@@ -167,11 +164,10 @@
       if (key === '/') {
         event.preventDefault();
         jumpTo('ask');
-        document.getElementById('cc-input')?.focus({ preventScroll: true });
+        document.getElementById('cx-input')?.focus({ preventScroll: true });
       } else if (key === 'ArrowLeft' || key === 'ArrowRight' || key === 'h' || key === 'l') {
-        if (event.target instanceof Element && event.target.closest('[role="tab"]')) return;
         event.preventDefault();
-        moveChapter(key === 'ArrowLeft' || key === 'h' ? -1 : 1, { reveal: true });
+        moveChapter(key === 'ArrowLeft' || key === 'h' ? -1 : 1);
       } else if (/^[0-9]$/.test(key) && SECTIONS[Number(key)]) {
         event.preventDefault();
         jumpTo(SECTIONS[Number(key)]);
@@ -194,11 +190,15 @@
     const setActive = (section) => {
       activeSection = section;
       navLinks.forEach((link) => link.setAttribute('aria-current', String(link.dataset.section === section)));
+      root.classList.toggle('in-story', section === 'story');
     };
 
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
-        if (entry.isIntersecting) setActive(entry.target.dataset.nav || entry.target.id);
+        if (!entry.isIntersecting) continue;
+        setActive(entry.target.dataset.nav || entry.target.id);
+        if (entry.target.id === 'story') setChapter(-1);
+        else if (chapters.includes(entry.target)) setChapter(chapters.indexOf(entry.target));
       }
     }, { rootMargin: '-45% 0px -50% 0px' });
     blocks.forEach((block) => observer.observe(block));
@@ -210,62 +210,36 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Story tabs
+  // Story chapters: the strip in the bottom bar scrolls to each chapter and
+  // highlights the one in view.
 
-  const tabs = Array.from(document.querySelectorAll('.tabs [role="tab"]'));
-  const tabList = document.querySelector('.tabs');
+  const chapters = Array.from(document.querySelectorAll('.chapter'));
+  const chapterStrip = document.querySelector('.chapters');
+  const chapterLinks = Array.from(document.querySelectorAll('.chapters a'));
+  let chapterIndex = -1;
 
-  function selectChapter(tab, { focus = false, reveal = false } = {}) {
-    for (const other of tabs) {
-      const selected = other === tab;
-      const panel = document.getElementById(other.getAttribute('aria-controls'));
-      other.setAttribute('aria-selected', String(selected));
-      other.tabIndex = selected ? 0 : -1;
-      if (!selected && !panel.hidden && current === panel && running) skipping = true;
-      panel.hidden = !selected;
-    }
-    // Keep the selected tab visible on narrow screens without scrolling the page.
-    const bar = tabList.getBoundingClientRect();
-    const box = tab.getBoundingClientRect();
-    if (box.left < bar.left) tabList.scrollLeft -= bar.left - box.left;
-    else if (box.right > bar.right) tabList.scrollLeft += box.right - bar.right;
-    if (focus) tab.focus({ preventScroll: true });
-    if (reveal) {
-      const box = tabList.getBoundingClientRect();
-      if (box.top < 0 || box.bottom > window.innerHeight) {
-        tabList.scrollIntoView({ block: 'start' });
-      }
-    }
+  function setChapter(index) {
+    chapterIndex = index;
+    chapterLinks.forEach((link, i) => link.setAttribute('aria-current', String(i === index)));
+    const link = chapterLinks[index];
+    if (!link) return;
+    // Keep the current chapter visible on narrow screens without scrolling the page.
+    const bar = chapterStrip.getBoundingClientRect();
+    const box = link.getBoundingClientRect();
+    if (box.left < bar.left) chapterStrip.scrollLeft -= bar.left - box.left;
+    else if (box.right > bar.right) chapterStrip.scrollLeft += box.right - bar.right;
   }
 
-  function moveChapter(delta, options) {
-    const index = tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true');
-    const next = tabs[Math.max(0, Math.min(tabs.length - 1, index + delta))];
-    selectChapter(next, options);
-  }
-
-  function startTabs() {
-    tabs.forEach((tab) => tab.addEventListener('click', () => selectChapter(tab)));
-
-    tabList.addEventListener('keydown', (event) => {
-      const moves = { ArrowLeft: -1, ArrowRight: 1, h: -1, l: 1 };
-      if (event.key in moves) {
-        event.preventDefault();
-        moveChapter(moves[event.key], { focus: true });
-      } else if (event.key === 'Home' || event.key === 'End') {
-        event.preventDefault();
-        selectChapter(tabs[event.key === 'Home' ? 0 : tabs.length - 1], { focus: true });
-      }
-    });
-
-    document.querySelectorAll('.tab-steps [data-move]').forEach((button) => {
-      button.addEventListener('click', () => moveChapter(Number(button.dataset.move), { reveal: true }));
-    });
+  function moveChapter(delta) {
+    const from = activeSection === 'story' ? chapterIndex : delta > 0 ? -1 : chapters.length;
+    const index = Math.max(0, Math.min(chapters.length - 1, from + delta));
+    jumpTo(chapters[index].id);
+    setChapter(index);
   }
 
   // ---------------------------------------------------------------------------
-  // Ask: a small Claude Code style prompt. The form's data-endpoint points at
-  // the worker in /worker, which holds the API key and streams plain text back.
+  // Ask: a Codex CLI style composer. The form's data-endpoint points at the
+  // worker in /worker, which holds the API key and streams plain text back.
 
   const ASK_HISTORY = 11;
   const ASK_IDEAS = [
@@ -274,47 +248,58 @@
     'What does a cyber soldier do?',
     'What are you building next?',
   ];
-  const SPINNER = ['·', '✢', '✳', '✶', '✻', '✽', '✻', '✶', '✳', '✢'];
-  const VERBS = ['Thinking', 'Warming up', 'Repping', 'Compiling', 'Spotting', 'Bulking'];
 
   function startAsk() {
-    const form = document.querySelector('.cc-form');
+    const form = document.querySelector('.cx-composer');
     if (!form) return;
-    const input = form.querySelector('input');
-    const log = document.querySelector('.cc-log');
+    const input = form.querySelector('textarea');
+    const log = document.querySelector('.cx-log');
+    const context = document.querySelector('.cx-context');
     const history = [];
-    let busy = false;
+    let controller = null;
+
+    const keepInView = () => form.scrollIntoView({ block: 'nearest' });
 
     const line = (className, text) => {
       const item = document.createElement('li');
       item.className = className;
       if (text !== undefined) item.textContent = text;
       log.append(item);
-      form.scrollIntoView({ block: 'nearest' });
+      keepInView();
       return item;
     };
 
-    const answerLine = () => {
-      const item = line('cc-bot');
-      const dot = document.createElement('span');
-      dot.className = 'cc-dot';
-      dot.setAttribute('aria-hidden', 'true');
-      dot.textContent = '⏺';
-      const text = document.createElement('div');
-      text.className = 'cc-text';
-      item.append(dot, text);
-      return text;
+    const prefixed = (className, mark, text) => {
+      const item = line(className);
+      const prefix = document.createElement('span');
+      prefix.className = 'cx-mark';
+      prefix.setAttribute('aria-hidden', 'true');
+      prefix.textContent = mark;
+      const body = document.createElement('div');
+      body.textContent = text;
+      item.append(prefix, body);
+      return body;
     };
 
-    const spinner = () => {
-      const item = line('cc-status');
-      const verb = VERBS[Math.floor(Math.random() * VERBS.length)];
-      let frame = 0;
+    const updateContext = () => {
+      const used = Math.min(history.length, 10) * 9;
+      context.textContent = `${100 - used}% context left`;
+    };
+
+    const resize = () => {
+      input.style.height = 'auto';
+      input.style.height = `${input.scrollHeight}px`;
+    };
+
+    const working = () => {
+      const item = line('cx-status');
+      const started = Date.now();
       const draw = () => {
-        item.textContent = `${SPINNER[frame++ % SPINNER.length]} ${verb}…`;
+        const seconds = Math.floor((Date.now() - started) / 1000);
+        item.innerHTML = `<span class="cx-mark">•</span><div><span class="cx-shimmer">Working</span> <span class="dim">(${seconds}s • esc to interrupt)</span></div>`;
       };
       draw();
-      const timer = setInterval(draw, 120);
+      const timer = setInterval(draw, 1000);
       return () => {
         clearInterval(timer);
         item.remove();
@@ -323,7 +308,9 @@
 
     async function ask(question) {
       history.push({ role: 'user', content: question });
-      const stop = spinner();
+      updateContext();
+      controller = new AbortController();
+      const stop = working();
       let text = '';
       let out = null;
 
@@ -334,6 +321,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: history.slice(-ASK_HISTORY) }),
+          signal: controller.signal,
         });
         if (!response.ok || !response.body) throw new Error(response.status === 429 ? 'busy' : 'failed');
 
@@ -345,69 +333,83 @@
           text += decoder.decode(value, { stream: true });
           if (!out && text.trim()) {
             stop();
-            out = answerLine();
+            out = prefixed('cx-bot', '•', '');
           }
           if (out) out.textContent = text.trim();
-          form.scrollIntoView({ block: 'nearest' });
+          keepInView();
         }
         if (!text.trim()) throw new Error('failed');
         history.push({ role: 'assistant', content: text.trim() });
       } catch (error) {
         stop();
         history.pop();
+        const reason = error.name === 'AbortError' ? 'interrupted' : error.message;
         const messages = {
           offline: "The AI isn't connected yet. Until it is, email me at gabriel@lundbergwedman.com and I'll answer myself.",
           busy: "That's a lot of questions! Give it a minute and try again.",
+          interrupted: 'Conversation interrupted. Ask something else whenever you like.',
         };
-        const note = `⎿ ${messages[error.message] || 'Something went wrong. Try again, or email gabriel@lundbergwedman.com.'}`;
-        if (out) {
-          out.closest('li').classList.add('cc-error');
-          out.textContent = `${text.trim()}\n\n${note}`;
-        } else {
-          line('cc-note cc-error', note);
-        }
+        prefixed('cx-note cx-error', '■', messages[reason] || 'Something went wrong. Try again, or email gabriel@lundbergwedman.com.');
+      } finally {
+        controller = null;
+        updateContext();
       }
     }
 
     function command(name) {
+      prefixed('cx-user', '›', name);
       if (name === '/clear') {
         log.replaceChildren();
         history.length = 0;
+        updateContext();
       } else if (name === '/help') {
-        line('cc-user', `> ${name}`);
-        line('cc-note', `Things you can ask:\n${ASK_IDEAS.map((idea) => `  · ${idea}`).join('\n')}`);
+        prefixed('cx-note', '•', `Things you can ask:\n${ASK_IDEAS.map((idea) => `  ${idea}`).join('\n')}`);
+      } else if (name === '/status') {
+        const asked = history.filter((message) => message.role === 'user').length;
+        prefixed('cx-note', '•', `model:     ${document.querySelector('.cx-model')?.textContent || 'unknown'}\nquestions: ${asked}\n${context.textContent}`);
       } else {
-        line('cc-user', `> ${name}`);
-        line('cc-note cc-error', `⎿ Unknown command ${name}. Try /help or /clear.`);
+        prefixed('cx-note cx-error', '■', `Unrecognized command '${name}'. Type /help for ideas.`);
       }
     }
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
+    async function submit() {
       const question = input.value.trim();
-      if (!question || busy) return;
+      if (!question || controller) return;
       input.value = '';
+      resize();
       if (question.startsWith('/')) {
         command(question.split(/\s+/)[0].toLowerCase());
         return;
       }
-      busy = true;
       form.classList.add('busy');
-      line('cc-user', `> ${question}`);
+      prefixed('cx-user', '›', question);
       await ask(question);
-      busy = false;
       form.classList.remove('busy');
-      input.focus({ preventScroll: true });
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submit();
     });
 
+    input.addEventListener('input', resize);
     input.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') input.blur();
+      if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+        event.preventDefault();
+        submit();
+      } else if (event.key === 'Escape') {
+        if (controller) controller.abort();
+        else input.blur();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && controller) controller.abort();
     });
   }
 
   startTypewriter();
   startKeyboard();
-  startTabs();
   startAsk();
   if ('IntersectionObserver' in window) startNavbar();
 })();

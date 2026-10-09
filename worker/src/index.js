@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { PROFILE } from './profile.js';
 
 const ALLOWED_ORIGINS = new Set([
@@ -65,29 +65,29 @@ export default {
     const messages = readMessages(await request.json().catch(() => null));
     if (!messages) return new Response('Bad request', { status: 400, headers: cors });
 
-    const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
-    const stream = client.beta.messages.stream({
-      model: 'claude-opus-5-5',
-      max_tokens: 1024,
-      output_config: { effort: 'low' },
-      betas: ['server-side-fallback-2026-07-01'],
-      fallbacks: 'default',
-      system: SYSTEM,
-      messages,
-    });
+    const client = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
     const encoder = new TextEncoder();
     const body = new ReadableStream({
       async start(controller) {
         try {
+          const stream = await client.responses.create({
+            model: env.OPENAI_MODEL || 'gpt-5.4-mini',
+            instructions: SYSTEM,
+            input: messages,
+            reasoning: { effort: 'low' },
+            max_output_tokens: 1024,
+            store: false,
+            stream: true,
+          });
           for await (const event of stream) {
-            if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
-              controller.enqueue(encoder.encode(event.delta.text));
+            if (event.type === 'response.output_text.delta') {
+              controller.enqueue(encoder.encode(event.delta));
+            } else if (event.type === 'response.refusal.delta') {
+              controller.enqueue(encoder.encode(event.delta));
+            } else if (event.type === 'error' || event.type === 'response.failed') {
+              throw new Error(event.type);
             }
-          }
-          const final = await stream.finalMessage();
-          if (final.stop_reason === 'refusal') {
-            controller.enqueue(encoder.encode("\n\nI can't help with that one. Ask me something about Gabriel instead."));
           }
         } catch (error) {
           console.error(error);
